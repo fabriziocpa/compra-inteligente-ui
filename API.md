@@ -225,11 +225,13 @@ Get a single client by UUID. Returns `403` if the client belongs to another user
 
 #### `PATCH /api/v1/clients/{client_id}`
 
-Update a client's contact information (only `email` and `phone` are mutable).
+Update a client. All registered fields are editable.
 
 **Request body** (all fields optional)
 ```json
 {
+  "full_name": "Juan Pérez Díaz",
+  "document_id": "45678912",
   "email": "new@example.com",
   "phone": "987654321"
 }
@@ -312,12 +314,16 @@ Get a single vehicle by UUID. Returns `403` if not the owner.
 
 #### `PATCH /api/v1/vehicles/{vehicle_id}`
 
-Update a vehicle's list price (only `list_price` is mutable).
+Update a vehicle. All registered fields are editable.
 
-**Request body** (optional)
+**Request body** (all fields optional)
 ```json
 {
-  "list_price": "90000.00"
+  "brand": "Toyota",
+  "model": "Corolla Cross",
+  "year": 2026,
+  "list_price": "90000.00",
+  "currency": "PEN"
 }
 ```
 
@@ -354,11 +360,25 @@ List all loans whose client belongs to the authenticated user.
     "balloon_pct": "0.30",
     "term_periods": 36,
     "frequency_days": 30,
+    "rate_segments": [
+      {
+        "from_period": 1,
+        "to_period": 36,
+        "rate_kind": "TEA",
+        "rate_value": "0.12",
+        "capitalizations_per_year": null
+      }
+    ],
+    "grace_periods": ["T", "P", "S"],
+    "additional_charges": [],
     "status": "draft",
     "created_at": "2026-06-20T12:00:00Z"
   }
 ]
 ```
+
+The loan object includes the full configuration (`rate_segments`,
+`grace_periods`, `additional_charges`) so the UI can pre-fill edit forms.
 
 ---
 
@@ -386,7 +406,7 @@ Create a new loan simulation.
       "capitalizations_per_year": null
     }
   ],
-  "grace_periods": ["S", "S", "T"],
+  "grace_periods": ["T", "P", "S"],
   "additional_charges": [
     {
       "name": "Seguro vehicular",
@@ -413,7 +433,7 @@ Create a new loan simulation.
 | `term_periods`       | integer         | > 0 (number of installments)                            |
 | `frequency_days`     | integer         | > 0 (e.g. 30 = monthly, 15 = biweekly)                 |
 | `rate_segments`      | array           | At least one; periods must be contiguous and cover 1–N  |
-| `grace_periods`      | array of string | One entry per period; `"N"` normal, `"S"` partial grace, `"T"` total grace |
+| `grace_periods`      | array of string | One entry per period; `"S"` normal (no grace), `"P"` partial grace, `"T"` total grace |
 | `additional_charges` | array           | Optional fees/insurance applied per period              |
 
 **`rate_segments` item**
@@ -451,13 +471,19 @@ Get a single loan. Returns `403` if not the owner's loan.
 
 #### `PATCH /api/v1/loans/{loan_id}`
 
-Update mutable loan fields. All fields are optional; omit to leave unchanged. Re-generating the schedule after a patch is the caller's responsibility.
+Update mutable loan fields. All fields are optional; omit to leave unchanged.
+Patching any parameter **discards the stored schedule** and resets `status` to
+`draft` — call `POST /schedule` again to recompute.
 
 **Request body**
 ```json
 {
+  "currency": "PEN",
+  "vehicle_price": "90000.00",
   "initial_payment_pct": "0.25",
   "balloon_pct": "0.35",
+  "term_periods": 48,
+  "frequency_days": 30,
   "rate_segments": [...],
   "grace_periods": [...],
   "additional_charges": [...]
@@ -487,18 +513,27 @@ Delete a loan and its schedule. Returns `403` if not the owner.
   "rows": [
     {
       "period": 1,
-      "grace_type": "N",
+      "grace_type": "S",
       "initial_balance": "68000.00",
       "interest": "660.23",
       "payment": "2138.45",
       "amortization": "1478.22",
-      "final_balance": "66521.78"
+      "final_balance": "66521.78",
+      "charges": [
+        { "name": "Seguro vehicular", "kind": "seguro", "amount": "-204.00" }
+      ],
+      "charges_total": "-204.00",
+      "total_payment": "2342.45"
     }
   ]
 }
 ```
 
-All monetary values are strings (decimal precision).
+All monetary values are strings (decimal precision). `charges` lists each
+per-period additional charge (negative amounts = debtor outflows);
+`total_payment = payment + charges_total` is the full installment required by
+the transparency norm. (Example shown with positive payment values for
+brevity; the engine returns them negative.)
 
 ---
 
@@ -537,6 +572,36 @@ Return financial indicators for the loan. The schedule must exist before calling
 | `tcea`             | Costo Efectivo Anual (annualized, 360-day Peruvian convention)|
 | `van_at_period_rate` | NPV at the supplied discount rate; `null` if not provided   |
 | `cashflows`        | Loan outflow (negative) followed by each period payment       |
+
+---
+
+### Operations log
+
+#### `GET /api/v1/operations`
+
+Return the authenticated user's operation log (every mutation — register,
+login, CRUD, schedule generation, indicator calculation — is recorded in the
+`operations_log` table).
+
+**Query parameters**
+
+| Parameter | Type    | Required | Description                    |
+|-----------|---------|----------|--------------------------------|
+| `limit`   | integer | No       | Max rows (1–500, default 100)  |
+
+**Response `200`**
+```json
+[
+  {
+    "id": "uuid",
+    "action": "loan.schedule_generated",
+    "entity_type": "loan",
+    "entity_id": "uuid",
+    "detail": { "rows": 36 },
+    "created_at": "2026-07-02T12:00:00Z"
+  }
+]
+```
 
 ---
 
@@ -599,7 +664,14 @@ All errors follow a consistent envelope:
 | `payment_pct` | Percentage of the period payment amount  |
 
 ### Loan status
-| Value    | Description                           |
-|----------|---------------------------------------|
-| `draft`  | Created, schedule not yet computed    |
-| `active` | Schedule computed and persisted       |
+| Value       | Description                           |
+|-------------|---------------------------------------|
+| `draft`     | Created, schedule not yet computed    |
+| `scheduled` | Schedule computed and persisted       |
+
+### Grace codes
+| Value | Description                                              |
+|-------|----------------------------------------------------------|
+| `S`   | Normal period (no grace): full installment               |
+| `P`   | Partial grace: interest only, no amortization            |
+| `T`   | Total grace: nothing paid, interest capitalizes          |
