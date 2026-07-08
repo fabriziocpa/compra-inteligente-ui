@@ -88,7 +88,7 @@ export function DashboardView() {
             <CardDescription>Tus últimas simulaciones creadas.</CardDescription>
           </div>
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             render={<Link href="/simulaciones" />}
           >

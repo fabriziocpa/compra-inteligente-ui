@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LabelWithHelp } from "@/components/field-help";
+import { DecimalInput } from "@/components/loans/decimal-input";
 import { RATE_KINDS } from "@/lib/loan-domain";
 import type { RateSegmentFormValues } from "@/lib/schemas";
 
@@ -69,7 +70,7 @@ export function RateSegmentsEditor({
         <p className="text-muted-foreground text-xs">
           Los tramos deben ser contiguos y cubrir del período 1 al {termPeriods || "N"}.
         </p>
-        <Button type="button" variant="ghost" size="sm" onClick={single}>
+        <Button type="button" variant="outline" size="sm" onClick={single}>
           Un solo tramo
         </Button>
       </div>
@@ -84,7 +85,7 @@ export function RateSegmentsEditor({
               {value.length > 1 && (
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   aria-label="Eliminar tramo"
                   onClick={() => removeSegment(i)}
@@ -95,7 +96,7 @@ export function RateSegmentsEditor({
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="space-y-1.5">
-                <LabelWithHelp help="Período donde termina este tramo de tasa (inclusive).">
+                <LabelWithHelp>
                   Hasta período
                 </LabelWithHelp>
                 <Input
@@ -107,7 +108,7 @@ export function RateSegmentsEditor({
                 />
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="TEA: tasa efectiva anual. TNA: tasa nominal anual (requiere capitalizaciones).">
+                <LabelWithHelp help="TEA: efectiva anual. TNA: nominal anual.">
                   Tipo de tasa
                 </LabelWithHelp>
                 <Select
@@ -133,26 +134,21 @@ export function RateSegmentsEditor({
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="Valor de la tasa anual, en porcentaje (ej. 12 para 12%).">
+                <LabelWithHelp help="Tasa anual en porcentaje.">
                   Tasa (%)
                 </LabelWithHelp>
-                <Input
-                  type="number"
-                  step="0.0001"
-                  inputMode="decimal"
-                  placeholder="12"
+                <DecimalInput
                   value={seg.rate_value}
-                  onChange={(e) => update(i, { rate_value: e.target.value })}
+                  onChange={(v) => update(i, { rate_value: v })}
                 />
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="Solo para TNA: número de capitalizaciones por año (ej. 12 = mensual).">
+                <LabelWithHelp help="Solo TNA: capitalizaciones por año.">
                   Capit./año
                 </LabelWithHelp>
                 <Input
                   type="number"
                   min={1}
-                  placeholder={seg.rate_kind === "TNA" ? "12" : "—"}
                   disabled={seg.rate_kind !== "TNA"}
                   value={seg.capitalizations_per_year}
                   onChange={(e) =>

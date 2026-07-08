@@ -75,7 +75,6 @@ function LoginForm() {
                   <Input
                     type="email"
                     autoComplete="email"
-                    placeholder="asesor@banco.com"
                     {...field}
                   />
                 </FormControl>
@@ -93,7 +92,6 @@ function LoginForm() {
                   <Input
                     type="password"
                     autoComplete="current-password"
-                    placeholder="••••••••"
                     {...field}
                   />
                 </FormControl>

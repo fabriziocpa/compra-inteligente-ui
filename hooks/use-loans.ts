@@ -77,13 +77,14 @@ export function useGenerateSchedule(id: string) {
 
 export function useIndicators(
   id: string | undefined,
-  discountRatePerPeriod?: string,
+  discountRateAnnual?: string,
 ) {
   return useQuery({
-    queryKey: qk.indicators(id ?? "", discountRatePerPeriod),
+    queryKey: qk.indicators(id ?? "", discountRateAnnual),
     queryFn: () => {
-      const q = discountRatePerPeriod
-        ? `?discount_rate_per_period=${encodeURIComponent(discountRatePerPeriod)}`
+      // El COK viaja ANUAL; el servidor lo convierte a la tasa del período.
+      const q = discountRateAnnual
+        ? `?discount_rate_annual=${encodeURIComponent(discountRateAnnual)}`
         : "";
       return api<Indicators>(`loans/${id}/indicators${q}`);
     },

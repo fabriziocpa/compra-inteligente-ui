@@ -111,7 +111,7 @@ export function LoansList() {
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Ver"
                           render={<Link href={`/simulaciones/${l.id}`} />}
@@ -119,7 +119,7 @@ export function LoansList() {
                           <Eye />
                         </Button>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Eliminar"
                           onClick={() => setDeleteTarget(l)}

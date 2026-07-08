@@ -115,7 +115,7 @@ export function ClientsView() {
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Editar"
                           onClick={() => setEditTarget(c)}
@@ -123,7 +123,7 @@ export function ClientsView() {
                           <Pencil />
                         </Button>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Eliminar"
                           onClick={() => setDeleteTarget(c)}
@@ -198,11 +198,11 @@ function CreateClientDialog({
               name="full_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Nombre y apellidos completos del cliente.">
+                  <FormLabel>
                     Nombre completo
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Juan Pérez" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -213,11 +213,11 @@ function CreateClientDialog({
               name="document_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="DNI, carné de extranjería u otro documento de identidad.">
+                  <FormLabel help="DNI u otro documento de identidad.">
                     Documento de identidad
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="12345678" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -230,7 +230,7 @@ function CreateClientDialog({
                 <FormItem>
                   <FormLabel help="Correo de contacto del cliente.">Correo</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="juan@example.com" {...field} />
+                    <Input type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -241,11 +241,11 @@ function CreateClientDialog({
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Opcional. Número de contacto, máx. 50 caracteres.">
+                  <FormLabel help="Opcional.">
                     Teléfono
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="999999999" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -325,7 +325,7 @@ function EditClientForm({ client, onDone }: { client: Client; onDone: () => void
             name="full_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel help="Nombre y apellidos completos del cliente.">
+                <FormLabel>
                   Nombre completo
                 </FormLabel>
                 <FormControl>
@@ -340,7 +340,7 @@ function EditClientForm({ client, onDone }: { client: Client; onDone: () => void
             name="document_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel help="DNI, carné de extranjería u otro documento de identidad.">
+                <FormLabel help="DNI u otro documento de identidad.">
                   Documento de identidad
                 </FormLabel>
                 <FormControl>
@@ -368,7 +368,7 @@ function EditClientForm({ client, onDone }: { client: Client; onDone: () => void
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel help="Nuevo número de contacto (opcional).">Teléfono</FormLabel>
+                <FormLabel help="Opcional.">Teléfono</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
