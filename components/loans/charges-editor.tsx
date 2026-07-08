@@ -11,7 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LabelWithHelp } from "@/components/field-help";
-import { CHARGE_BASES, CHARGE_KINDS } from "@/lib/loan-domain";
+import { DecimalInput } from "@/components/loans/decimal-input";
+import { CHARGE_BASES, CHARGE_KINDS, CHARGE_PRESETS } from "@/lib/loan-domain";
 import type { AdditionalChargeFormValues } from "@/lib/schemas";
 
 export function emptyCharge(): AdditionalChargeFormValues {
@@ -50,13 +51,19 @@ export function ChargesEditor({
 
       {value.map((c, i) => {
         const isPct = c.basis !== "fixed";
+        const valueHelp =
+          c.basis === "fixed"
+            ? "Monto fijo por período."
+            : c.basis === "vehicle_pct_annual"
+              ? "% anual sobre el precio del vehículo."
+              : "Porcentaje a aplicar.";
         return (
           <div key={i} className="bg-muted/40 space-y-3 rounded-lg border p-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Cargo {i + 1}</span>
               <Button
                 type="button"
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 aria-label="Eliminar cargo"
                 onClick={() => onChange(value.filter((_, idx) => idx !== i))}
@@ -66,11 +73,10 @@ export function ChargesEditor({
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 space-y-1.5 sm:col-span-1">
-                <LabelWithHelp help="Nombre descriptivo del cargo (ej. Seguro vehicular).">
+                <LabelWithHelp>
                   Nombre
                 </LabelWithHelp>
                 <Input
-                  placeholder="Seguro vehicular"
                   value={c.name}
                   onChange={(e) => update(i, { name: e.target.value })}
                 />
@@ -97,7 +103,7 @@ export function ChargesEditor({
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="Cómo se calcula: monto fijo, % del saldo o % de la cuota.">
+                <LabelWithHelp help="Forma de cálculo del cargo.">
                   Base
                 </LabelWithHelp>
                 <Select
@@ -120,24 +126,20 @@ export function ChargesEditor({
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp
-                  help={
-                    isPct
-                      ? "Porcentaje a aplicar (ej. 0.3 para 0.3%)."
-                      : "Monto fijo por período en la moneda del crédito."
-                  }
-                >
-                  {isPct ? "Valor (%)" : "Monto"}
+                <LabelWithHelp help={valueHelp}>
+                  {c.basis === "vehicle_pct_annual"
+                    ? "Valor (% anual)"
+                    : isPct
+                      ? "Valor (%)"
+                      : "Monto"}
                 </LabelWithHelp>
-                <Input
-                  type="number"
-                  step="0.0001"
+                <DecimalInput
                   value={c.value}
-                  onChange={(e) => update(i, { value: e.target.value })}
+                  onChange={(v) => update(i, { value: v })}
                 />
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="Período desde el cual se aplica el cargo.">
+                <LabelWithHelp>
                   Desde período
                 </LabelWithHelp>
                 <Input
@@ -148,7 +150,7 @@ export function ChargesEditor({
                 />
               </div>
               <div className="space-y-1.5">
-                <LabelWithHelp help="Período hasta el cual se aplica. Vacío = hasta el final.">
+                <LabelWithHelp help="Último período. Vacío = hasta el final.">
                   Hasta período
                 </LabelWithHelp>
                 <Input
@@ -164,14 +166,36 @@ export function ChargesEditor({
         );
       })}
 
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        onClick={() => onChange([...value, emptyCharge()])}
-      >
-        <Plus /> Agregar cargo
-      </Button>
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => onChange([...value, emptyCharge()])}
+        >
+          <Plus /> Agregar cargo
+        </Button>
+        {/* Presets del modelo Interbank: precargan nombre, tipo y base;
+            solo queda digitar el valor. Se ocultan si la fila ya existe. */}
+        {CHARGE_PRESETS.filter(
+          (p) => !value.some((c) => c.name === p.name),
+        ).map((p) => (
+          <Button
+            key={p.name}
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={() =>
+              onChange([
+                ...value,
+                { ...emptyCharge(), name: p.name, kind: p.kind, basis: p.basis },
+              ])
+            }
+          >
+            <Plus /> {p.name}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,15 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChevronsUpDown, LogOut } from "lucide-react";
+import { EllipsisVertical, LogOut } from "lucide-react";
 import { toast } from "sonner";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -65,24 +63,11 @@ export function UserMenu() {
                     {user?.email ?? ""}
                   </span>
                 </div>
-                <ChevronsUpDown className="ml-auto size-4" />
+                <EllipsisVertical className="ml-auto size-4" />
               </SidebarMenuButton>
             }
           />
-          <DropdownMenuContent
-            align="end"
-            side="top"
-            className="min-w-56"
-          >
-            <DropdownMenuLabel className="font-normal">
-              <div className="flex flex-col">
-                <span className="font-medium">{user?.full_name}</span>
-                <span className="text-muted-foreground text-xs">
-                  {user?.email}
-                </span>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+          <DropdownMenuContent align="end" side="top" className="min-w-56">
             <DropdownMenuItem onClick={onLogout} variant="destructive">
               <LogOut />
               Cerrar sesión

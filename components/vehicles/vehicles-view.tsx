@@ -124,7 +124,7 @@ export function VehiclesView() {
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Editar"
                           onClick={() => setEditTarget(v)}
@@ -132,7 +132,7 @@ export function VehiclesView() {
                           <Pencil />
                         </Button>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           aria-label="Eliminar"
                           onClick={() => setDeleteTarget(v)}
@@ -214,9 +214,9 @@ function CreateVehicleDialog({
                 name="brand"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel help="Marca del vehículo (ej. Toyota).">Marca</FormLabel>
+                    <FormLabel help="Marca del vehículo.">Marca</FormLabel>
                     <FormControl>
-                      <Input placeholder="Toyota" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -227,9 +227,9 @@ function CreateVehicleDialog({
                 name="model"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel help="Modelo del vehículo (ej. Corolla).">Modelo</FormLabel>
+                    <FormLabel help="Modelo del vehículo.">Modelo</FormLabel>
                     <FormControl>
-                      <Input placeholder="Corolla" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -242,7 +242,7 @@ function CreateVehicleDialog({
                 name="year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel help="Año del modelo, entre 1900 y 2100.">Año</FormLabel>
+                    <FormLabel help="Entre 1900 y 2100.">Año</FormLabel>
                     <FormControl>
                       <Input type="number" {...field} />
                     </FormControl>
@@ -284,11 +284,11 @@ function CreateVehicleDialog({
               name="list_price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Precio de lista del vehículo, mayor que 0.">
+                  <FormLabel help="Mayor que 0.">
                     Precio de lista
                   </FormLabel>
                   <FormControl>
-                    <Input type="number" step="0.01" placeholder="85000.00" {...field} />
+                    <Input type="number" step="0.01" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -365,7 +365,7 @@ function EditVehicleForm({ vehicle, onDone }: { vehicle: Vehicle; onDone: () => 
               name="brand"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Marca del vehículo (ej. Toyota).">Marca</FormLabel>
+                  <FormLabel help="Marca del vehículo.">Marca</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -378,7 +378,7 @@ function EditVehicleForm({ vehicle, onDone }: { vehicle: Vehicle; onDone: () => 
               name="model"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Modelo del vehículo (ej. Corolla).">Modelo</FormLabel>
+                  <FormLabel help="Modelo del vehículo.">Modelo</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -393,7 +393,7 @@ function EditVehicleForm({ vehicle, onDone }: { vehicle: Vehicle; onDone: () => 
               name="year"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel help="Año del modelo, entre 1900 y 2100.">Año</FormLabel>
+                  <FormLabel help="Entre 1900 y 2100.">Año</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
                   </FormControl>
@@ -435,7 +435,7 @@ function EditVehicleForm({ vehicle, onDone }: { vehicle: Vehicle; onDone: () => 
             name="list_price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel help="Nuevo precio de lista en la moneda seleccionada.">
+                <FormLabel help="Mayor que 0.">
                   Precio de lista
                 </FormLabel>
                 <FormControl>

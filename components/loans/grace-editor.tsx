@@ -84,7 +84,7 @@ export function GraceEditor({
       {/* Aplicador de reglas por rango */}
       <div className="bg-muted/40 grid grid-cols-2 items-end gap-3 rounded-lg border p-3 sm:grid-cols-4">
         <div className="space-y-1.5">
-          <LabelWithHelp help="Período inicial del rango al que aplicar el tipo de gracia.">
+          <LabelWithHelp>
             Desde
           </LabelWithHelp>
           <Input
@@ -96,7 +96,7 @@ export function GraceEditor({
           />
         </div>
         <div className="space-y-1.5">
-          <LabelWithHelp help="Período final del rango (inclusive). Vacío = igual que 'Desde'.">
+          <LabelWithHelp help="Último período. Vacío = solo el período 'Desde'.">
             Hasta
           </LabelWithHelp>
           <Input
@@ -104,12 +104,11 @@ export function GraceEditor({
             min={1}
             max={termPeriods}
             value={to}
-            placeholder={String(termPeriods)}
             onChange={(e) => setTo(e.target.value)}
           />
         </div>
         <div className="space-y-1.5">
-          <LabelWithHelp help="Tipo de gracia a aplicar: Normal, Parcial (solo interés) o Total.">
+          <LabelWithHelp help="Sin gracia, Parcial (solo interés) o Total.">
             Tipo
           </LabelWithHelp>
           <Select
@@ -140,7 +139,7 @@ export function GraceEditor({
           <p className="text-muted-foreground text-xs">
             Toca un período para cambiar su tipo (S → P → T).
           </p>
-          <Button type="button" variant="ghost" size="sm" onClick={reset}>
+          <Button type="button" variant="outline" size="sm" onClick={reset}>
             <RotateCcw className="size-3.5" /> Reiniciar
           </Button>
         </div>

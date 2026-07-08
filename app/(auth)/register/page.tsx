@@ -61,11 +61,11 @@ export default function RegisterPage() {
             name="full_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel help="Tu nombre completo como asesor.">
+                <FormLabel>
                   Nombre completo
                 </FormLabel>
                 <FormControl>
-                  <Input autoComplete="name" placeholder="Fabrizio Contreras" {...field} />
+                  <Input autoComplete="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,7 +83,6 @@ export default function RegisterPage() {
                   <Input
                     type="email"
                     autoComplete="email"
-                    placeholder="asesor@banco.com"
                     {...field}
                   />
                 </FormControl>
@@ -101,7 +100,6 @@ export default function RegisterPage() {
                   <Input
                     type="password"
                     autoComplete="new-password"
-                    placeholder="Mínimo 8 caracteres"
                     {...field}
                   />
                 </FormControl>
