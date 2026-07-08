@@ -46,7 +46,7 @@ export default function NuevaSimulacionPage() {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
           aria-label="Volver"
           render={<Link href="/simulaciones" />}

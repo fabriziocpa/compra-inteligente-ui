@@ -52,82 +52,83 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Compra Inteligente — professional fintech theme (deep blue + emerald). */
+/* Compra Inteligente — paleta BCP: azul #003DA5/#00205B, naranja
+   #FF6600/#EF7622, blanco. Modo claro por defecto. */
 :root {
-  --background: oklch(0.99 0.004 250);
-  --foreground: oklch(0.21 0.03 257);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.03 257);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.03 257);
-  --primary: oklch(0.45 0.15 256);
-  --primary-foreground: oklch(0.98 0.01 250);
-  --secondary: oklch(0.96 0.01 250);
-  --secondary-foreground: oklch(0.3 0.04 257);
-  --muted: oklch(0.96 0.01 250);
-  --muted-foreground: oklch(0.55 0.025 257);
-  --accent: oklch(0.95 0.05 165);
-  --accent-foreground: oklch(0.39 0.1 165);
-  --destructive: oklch(0.577 0.245 27.325);
-  --success: oklch(0.6 0.13 163);
-  --success-foreground: oklch(0.99 0 0);
-  --warning: oklch(0.72 0.15 70);
-  --warning-foreground: oklch(0.27 0.05 70);
-  --border: oklch(0.92 0.01 255);
-  --input: oklch(0.92 0.01 255);
-  --ring: oklch(0.45 0.15 256);
-  --chart-1: oklch(0.45 0.15 256);
-  --chart-2: oklch(0.6 0.13 163);
-  --chart-3: oklch(0.72 0.15 70);
-  --chart-4: oklch(0.6 0.12 250);
-  --chart-5: oklch(0.5 0.1 200);
+  --background: #ffffff;
+  --foreground: #1a2b4a;
+  --card: #ffffff;
+  --card-foreground: #1a2b4a;
+  --popover: #ffffff;
+  --popover-foreground: #1a2b4a;
+  --primary: #003da5;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3fb;
+  --secondary-foreground: #00205b;
+  --muted: #f3f6fb;
+  --muted-foreground: #5a6b85;
+  --accent: #fff0e5;
+  --accent-foreground: #c2570a;
+  --destructive: #dc2626;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --warning: #ef7622;
+  --warning-foreground: #7c3a00;
+  --border: #e2e8f2;
+  --input: #e2e8f2;
+  --ring: #003da5;
+  --chart-1: #003da5;
+  --chart-2: #ff6600;
+  --chart-3: #00205b;
+  --chart-4: #5b8def;
+  --chart-5: #ef7622;
   --radius: 0.625rem;
-  --sidebar: oklch(0.24 0.04 257);
-  --sidebar-foreground: oklch(0.92 0.012 250);
-  --sidebar-primary: oklch(0.6 0.13 163);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.31 0.04 257);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.31 0.04 257);
-  --sidebar-ring: oklch(0.6 0.13 163);
+  --sidebar: #00205b;
+  --sidebar-foreground: #dbe4f5;
+  --sidebar-primary: #ff6600;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #0a3175;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #0a3175;
+  --sidebar-ring: #ff6600;
 }
 
 .dark {
-  --background: oklch(0.18 0.02 257);
-  --foreground: oklch(0.96 0.01 250);
-  --card: oklch(0.22 0.025 257);
-  --card-foreground: oklch(0.96 0.01 250);
-  --popover: oklch(0.22 0.025 257);
-  --popover-foreground: oklch(0.96 0.01 250);
-  --primary: oklch(0.62 0.14 250);
-  --primary-foreground: oklch(0.16 0.02 257);
-  --secondary: oklch(0.28 0.03 257);
-  --secondary-foreground: oklch(0.96 0.01 250);
-  --muted: oklch(0.28 0.03 257);
-  --muted-foreground: oklch(0.7 0.02 257);
-  --accent: oklch(0.3 0.05 165);
-  --accent-foreground: oklch(0.9 0.05 165);
-  --destructive: oklch(0.704 0.191 22.216);
-  --success: oklch(0.65 0.14 163);
-  --success-foreground: oklch(0.16 0.02 257);
-  --warning: oklch(0.75 0.15 70);
-  --warning-foreground: oklch(0.18 0.02 257);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.62 0.14 250);
-  --chart-1: oklch(0.62 0.14 250);
-  --chart-2: oklch(0.65 0.14 163);
-  --chart-3: oklch(0.75 0.15 70);
-  --chart-4: oklch(0.55 0.12 220);
-  --chart-5: oklch(0.6 0.1 195);
-  --sidebar: oklch(0.16 0.02 257);
-  --sidebar-foreground: oklch(0.92 0.012 250);
-  --sidebar-primary: oklch(0.65 0.14 163);
-  --sidebar-primary-foreground: oklch(0.16 0.02 257);
-  --sidebar-accent: oklch(0.26 0.03 257);
-  --sidebar-accent-foreground: oklch(0.96 0.01 250);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.65 0.14 163);
+  --background: #0a1428;
+  --foreground: #e8eefb;
+  --card: #102040;
+  --card-foreground: #e8eefb;
+  --popover: #102040;
+  --popover-foreground: #e8eefb;
+  --primary: #4d82e6;
+  --primary-foreground: #ffffff;
+  --secondary: #16294d;
+  --secondary-foreground: #e8eefb;
+  --muted: #16294d;
+  --muted-foreground: #93a5c4;
+  --accent: #33200e;
+  --accent-foreground: #ffa35c;
+  --destructive: #f87171;
+  --success: #4ade80;
+  --success-foreground: #0a1428;
+  --warning: #ff6600;
+  --warning-foreground: #ffd9b8;
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 15%);
+  --ring: #4d82e6;
+  --chart-1: #4d82e6;
+  --chart-2: #ff6600;
+  --chart-3: #7fa4e8;
+  --chart-4: #ef7622;
+  --chart-5: #2f5cb8;
+  --sidebar: #00152e;
+  --sidebar-foreground: #dbe4f5;
+  --sidebar-primary: #ff6600;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #0a2a5c;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgb(255 255 255 / 8%);
+  --sidebar-ring: #ff6600;
 }
 
 @layer base {
@@ -140,4 +141,26 @@
   html {
     @apply font-sans;
   }
+}
+/* Shimmer «bancario»: una línea de luz que barre el espacio reservado del
+   número mientras el monto se calcula/carga (ver <NumberShimmer />). */
+@keyframes money-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.money-shimmer {
+  border-radius: 0.25rem;
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--muted-foreground) 14%, transparent) 40%,
+    color-mix(in oklab, var(--primary) 32%, transparent) 50%,
+    color-mix(in oklab, var(--muted-foreground) 14%, transparent) 60%
+  );
+  background-size: 200% 100%;
+  animation: money-shimmer 1.4s linear infinite;
 }

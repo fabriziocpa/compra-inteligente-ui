@@ -30,10 +30,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* Modo claro (blanco) por defecto; el toggle permite dark. */}
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
-        enableSystem
+        defaultTheme="light"
         disableTransitionOnChange
       >
         <TooltipProvider delay={150}>
