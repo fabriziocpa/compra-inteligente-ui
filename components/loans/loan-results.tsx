@@ -45,6 +45,7 @@ import { FieldHelp, LabelWithHelp } from "@/components/field-help";
 import { EmptyState, ErrorState } from "@/components/data-states";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LoanBuilder } from "@/components/loans/loan-builder";
+import { InterestAmortizationChart } from "@/components/loans/schedule-chart";
 import { emptySegment } from "@/components/loans/rate-segments-editor";
 import {
   useGenerateSchedule,
@@ -257,6 +258,12 @@ function ResultsBody({
       </div>
 
       <Resultados loan={loan} summary={summary} loanId={loanId} />
+
+      <InterestAmortizationChart
+        rows={rows}
+        currency={currency}
+        hasBalloon={hasBalloon}
+      />
 
       <Card>
         <CardHeader>
